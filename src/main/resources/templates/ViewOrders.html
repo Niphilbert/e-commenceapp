@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Order List</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #ffff;
+			margin: 0;
+			padding: 0;
+		}
+
+		header {
+			background-color: #2c3e50;
+			padding: 20px 0;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			position: fixed;
+			width: 100%;
+			top: 0;
+			z-index: 1000;
+		}
+
+		.navbar {
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+		}
+
+		.navbar a {
+			text-decoration: none;
+			color: white;
+		}
+
+		.navbar button {
+			padding: 10px 20px;
+			font-size: 16px;
+			cursor: pointer;
+			background-color: #fff;
+			color: #2c3e50;
+			border: none;
+			border-radius: 5px;
+			margin: 0 10px;
+			text-decoration: none;
+			transition: background-color 0.3s, color 0.3s;
+		}
+
+		.navbar button:hover {
+			background-color: #2c3e50;
+			color: white;
+		}
+
+		h1 {
+			color: #333;
+			margin-top: 100px;
+			text-align: center;
+		}
+
+		h2.message, h3.message {
+			color: green;
+			font-size: 24px;
+			text-align: center;
+			margin: 20px 0;
+		}
+
+		h3.message {
+			color: red;
+		}
+
+		table {
+			width: 80%;
+			margin: 20px auto;
+			border-collapse: collapse;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		}
+
+		th, td {
+			border: 1px solid #ddd;
+			padding: 12px;
+			text-align: center;
+		}
+
+		th {
+			background-color: #2c3e50;
+			color: white;
+		}
+
+		tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
+
+		img {
+			max-width: 100px;
+			max-height: 100px;
+		}
+
+		button {
+			padding: 15px 30px;
+			font-size: 16px;
+			cursor: pointer;
+			background-color: #4CAF50;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			margin-top: 20px;
+			text-decoration: none;
+			transition: background-color 0.3s;
+		}
+
+		button:hover {
+			background-color: #2c3e50;
+		}
+
+		a button {
+			background-color: #333;
+		}
+
+		a button:hover {
+			background-color: #555;
+		}
+	</style>
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			setTimeout(function () {
+				var messageElements = document.querySelectorAll('h2.message, h3.message');
+				messageElements.forEach(function (element) {
+					element.style.display = 'none';
+				});
+			}, 1000);
+		});
+	</script>
+</head>
+
+<body>
+<header>
+	<div class="navbar">
+		<a href="/customer/home"><button>Customer Home</button></a>
+		<a href="/customer/fetch-cart"><button>View Cart</button></a>
+		<a href="/customer/fetch-orders"><button>View Orders</button></a>
+		<a href="/logout"><button>Logout</button></a>
+	</div>
+</header>
+<h2 class="message" th:text="${pass}"></h2>
+<h3 class="message" th:text="${fail}"></h3>
+<h1>Order List</h1>
+<table>
+	<tr>
+		<th>Order Id</th>
+		<th>Payment Id</th>
+		<th>Date</th>
+		<th>Price</th>
+
+		<th>Action</th>
+	</tr>
+	<tr th:each="order:${orders}">
+		<td th:text="${order.order_id}"></td>
+		<td th:text="${order.payment_id}"></td>
+		<td th:text="${order.getDate()}"></td>
+		<td><span th:text="'$' + ${order.amount}"></span></td>
+
+		<td><a th:href="@{'/customer/cancel-order/'+${order.id}}"><button>Cancel Order</button></a></td>
+	</tr>
+</table>
+<br>
+<a href="/customer/home"><button>Back</button></a>
+</body>
+</html>

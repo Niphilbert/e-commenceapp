@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Signup</title>
+	<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			setTimeout(function () {
+				var messageElements = document.querySelectorAll('h2.message, h3.message');
+				messageElements.forEach(function (element) {
+					element.style.display = 'none';
+				});
+			}, 1000);
+		});
+	</script>
+</head>
+
+<body class="font-sans bg-gray-100 text-gray-800 flex items-center justify-center min-h-screen">
+
+<div class="w-full max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg">
+	<h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Customer Signup</h1>
+	<h2 class="message text-green-500 text-2xl mb-4" th:text="${pass}"></h2>
+	<h3 class="message text-red-500 text-2xl mb-4" th:text="${fail}"></h3>
+	<form action="/customer/signup" th:object="${customer}" method="post" class="space-y-6">
+		<fieldset>
+
+			<div>
+				<label for="name" class="block text-left text-gray-700">Name:</label>
+				<input type="text" id="name" th:field="*{name}" name="name" class="w-full px-3 py-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500">
+				<p th:errors="*{name}" class="text-red-500 text-sm"></p>
+			</div>
+			<div>
+				<label for="email" class="block text-left text-gray-700">Email:</label>
+				<input type="email" id="email" th:field="*{email}" name="email" class="w-full px-3 py-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500">
+				<p th:errors="*{email}" class="text-red-500 text-sm"></p>
+			</div>
+			<div>
+				<label for="password" class="block text-left text-gray-700">Password:</label>
+				<input type="password" id="password" th:field="*{password}" name="password" class="w-full px-3 py-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500">
+				<p th:errors="*{password}" class="text-red-500 text-sm"></p>
+			</div>
+			<div>
+				<label for="mobile" class="block text-left text-gray-700">Mobile:</label>
+				<input type="tel" id="mobile" th:field="*{mobile}" name="mobile" class="w-full px-3 py-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500">
+				<p th:errors="*{mobile}" class="text-red-500 text-sm"></p>
+			</div>
+			<div>
+				<label for="dob" class="block text-left text-gray-700">Date of Birth:</label>
+				<input type="date" id="dob" th:field="*{dob}" name="dob" class="w-full px-3 py-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500">
+				<p th:errors="*{dob}" class="text-red-500 text-sm"></p>
+			</div>
+			<div>
+				<label class="block text-left text-gray-700">Gender:</label>
+				<div class="flex items-center">
+					<input type="radio" id="male" name="gender" value="male" class="mr-2">
+					<label for="male" class="mr-4">Male</label>
+					<input type="radio" id="female" name="gender" value="female" class="mr-2">
+					<label for="female">Female</label>
+				</div>
+				<p th:errors="*{gender}" class="text-red-500 text-sm"></p>
+			</div>
+			<div class="flex justify-between mt-6">
+				<button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300">Signup</button>
+				<button type="reset" class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-700 transition duration-300">Cancel</button>
+			</div>
+		</fieldset>
+	</form>
+	<a href="/" class="inline-block mt-6 w-full">
+		<button class="w-full bg-gray-800 text-white py-2 px-4 rounded hover:bg-gray-900 transition duration-300">Back</button>
+	</a>
+</div>
+
+</body>
+
+</html>

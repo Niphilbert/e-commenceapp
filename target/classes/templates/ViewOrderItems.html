@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Order Items</title>
+
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f4f4f4;
+			margin: 0;
+			padding: 0;
+		}
+
+		header {
+			background-color: #4CAF50;
+			padding: 20px 0;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			position: fixed;
+			width: 100%;
+			top: 0;
+			z-index: 1000;
+		}
+
+		.navbar {
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+		}
+
+		.navbar a {
+			text-decoration: none;
+			color: white;
+		}
+
+		.navbar button {
+			padding: 10px 20px;
+			font-size: 16px;
+			cursor: pointer;
+			background-color: #fff;
+			color: #4CAF50;
+			border: none;
+			border-radius: 5px;
+			margin: 0 10px;
+			text-decoration: none;
+			transition: background-color 0.3s, color 0.3s;
+		}
+
+		.navbar button:hover {
+			background-color: #45a049;
+			color: white;
+		}
+
+		h1 {
+			color: #333;
+			margin-top: 100px;
+			text-align: center;
+		}
+
+		h2 {
+			color: green;
+		}
+
+		h3 {
+			color: red;
+		}
+
+		table {
+			width: 80%;
+			margin: 20px auto;
+			border-collapse: collapse;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		}
+
+		th,
+		td {
+			border: 1px solid #ddd;
+			padding: 12px;
+			text-align: center;
+		}
+
+		th {
+			background-color: #4CAF50;
+			color: white;
+		}
+
+		tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
+
+		img {
+			max-width: 100px;
+			max-height: 100px;
+		}
+
+		button {
+			padding: 15px 30px;
+			font-size: 16px;
+			cursor: pointer;
+			background-color: #4CAF50;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			margin-top: 20px;
+			text-decoration: none;
+			transition: background-color 0.3s;
+		}
+
+		button:hover {
+			background-color: #45a049;
+		}
+
+		a button {
+			background-color: #333;
+		}
+
+		a button:hover {
+			background-color: #555;
+		}
+
+		.total-row {
+			font-weight: bold;
+			background-color: #f2f2f2;
+		}
+
+		.currency {
+			font-size: 14px;
+			vertical-align: super;
+		}
+	</style>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			setTimeout(function () {
+				var h2Elements = document.querySelectorAll('h2, h3');
+				h2Elements.forEach(function (element) {
+					element.style.display = 'none';
+				});
+			}, 1000);
+		});
+	</script>
+</head>
+
+<body>
+<header>
+	<div class="navbar">
+		<a href="/customer/home"><button>Customer Home</button></a>
+		<a href="/customer/fetch-cart"><button>View Cart</button></a>
+		<a href="/customer/fetch-orders"><button>View Orders</button></a>
+		<a href="/logout"><button>Logout</button></a>
+	</div>
+</header>
+<h2 th:text="${pass}"></h2>
+<h3 th:text="${fail}"></h3>
+<h1>Order Items</h1>
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Picture</th>
+		<th>Category</th>
+		<th>Price</th>
+		<th>Quantity</th>
+		<th>Amount</th>
+	</tr>
+	<tr th:each="item:${order.items}">
+		<td th:text="${item.name}"></td>
+		<td><img th:src="@{'data:image/jpeg;base64,'+${item.generateBase64Image()}}"></td>
+		<td th:text="${item.category}"></td>
+		<td>
+			<span th:text="'&#8377;' + ${item.price / item.quantity}"></span>
+		</td>
+		<td th:text="${item.quantity}"></td>
+		<td>
+			<span th:text="'&#8377;' + ${item.price}"></span>
+		</td>
+	</tr>
+	<tr class="total-row">
+		<td colspan="5">Total Amount:</td>
+		<td th:text="'&#8377;' + ${order.amount}"></td>
+	</tr>
+</table>
+<br>
+<a href="/customer/fetch-orders"><button>Back</button></a>
+</body>
+
+</html>

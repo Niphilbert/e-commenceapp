@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Product Table</title>
+	<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			setTimeout(function () {
+				var h2Elements = document.querySelectorAll('h2, h3');
+				h2Elements.forEach(function (element) {
+					element.style.display = 'none';
+				});
+			}, 1000);
+		});
+	</script>
+</head>
+
+<body class="font-sans bg-gray-100 text-gray-800 min-h-screen flex flex-col">
+
+<!-- Messages -->
+<div class="container mx-auto text-center mt-10">
+	<h2 class="text-green-500 text-2xl mb-4" th:text="${pass}"></h2>
+	<h3 class="text-red-500 text-2xl mb-4" th:text="${fail}"></h3>
+</div>
+
+<!-- Main Content -->
+<main class="flex-grow container mx-auto text-center mt-10">
+	<h1 class="text-4xl font-bold text-gray-800 mb-6">Product List</h1>
+	<table class="w-full max-w-6xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+		<thead>
+		<tr class="bg-gray-800 text-white">
+			<th class="py-3 px-4">Name</th>
+			<th class="py-3 px-4">Picture</th>
+			<th class="py-3 px-4">Category</th>
+			<th class="py-3 px-4">Price</th>
+			<th class="py-3 px-4">Stock</th>
+			<th class="py-3 px-4">Remove</th>
+			<th class="py-3 px-4">Quantity</th>
+			<th class="py-3 px-4">Add</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr class="border-b border-gray-200" th:each="product:${products}">
+			<td class="py-3 px-4" th:text="${product.name}"></td>
+			<td class="py-3 px-4"><img th:src="@{'data:image/jpeg;base64,'+${product.generateBase64Image()}}" alt="Product Image" class="w-24 h-24 object-cover rounded"></td>
+			<td class="py-3 px-4" th:text="${product.category}"></td>
+			<td class="py-3 px-4" th:text="${product.price}+'&#8377'"></td>
+			<td class="py-3 px-4" th:text="${product.stock}"></td>
+			<td class="py-3 px-4"><a th:href="@{'/customer/cart-remove/'+${product.id}}" class="text-red-500 hover:text-red-700 transition duration-300">-</a></td>
+			<td class="py-3 px-4" th:text="${product.getQuantity(items)}"></td>
+			<td class="py-3 px-4"><a th:href="@{'/customer/cart-add/'+${product.id}}" class="text-green-500 hover:text-green-700 transition duration-300">+</a></td>
+		</tr>
+		</tbody>
+	</table>
+</main>
+
+<!-- Action Buttons -->
+<div class="container mx-auto text-center mt-10 mb-10">
+	<a href="/customer/fetch-cart" class="inline-block mb-4">
+		<button class="bg-blue-500 text-white py-3 px-6 rounded hover:bg-blue-700 transition duration-300">Proceed to Cart</button>
+	</a>
+	<a href="/customer/home" class="inline-block">
+		<button class="bg-gray-800 text-white py-3 px-6 rounded hover:bg-gray-900 transition duration-300">Back</button>
+	</a>
+</div>
+
+</body>
+
+</html>
